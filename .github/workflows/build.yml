@@ -12,9 +12,8 @@ jobs:
 
       - name: Install QPM
         run: |
-          curl -sL https://github.com/QuestPackageManager/QPM.CLI/releases/latest/download/qpm-linux-x86_64.zip -o qpm.zip || \
-          curl -sL https://github.com/QuestPackageManager/QPM.CLI/releases/download/v1.5.8/qpm-x86_64-unknown-linux-musl -o qpm || \
-          curl -sL https://github.com/QuestPackageManager/QPM.CLI/releases/download/v1.5.8/qpm-linux -o qpm
+          curl -sL "https://github.com/QuestPackageManager/QPM.CLI/releases/download/v1.5.8/qpm-x86_64-unknown-linux-musl" -o qpm
+          file qpm
           chmod +x qpm
           sudo mv qpm /usr/local/bin/qpm
           qpm --version
