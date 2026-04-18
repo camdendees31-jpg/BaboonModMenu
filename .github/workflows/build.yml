@@ -21,19 +21,18 @@ jobs:
       - name: Install Ninja & CMake
         run: sudo apt-get install -y ninja-build cmake
 
-      - name: Setup NDK and Restore
-        run: |
-          qpm config ndk-path ""
-          qpm ndk download 26
-          NDK_PATH=$(find $HOME/.local/share/QPM-RS/ndk -maxdepth 1 -type d -name "26*" | head -1)
-          echo "NDK at: $NDK_PATH"
-          qpm config ndk-path "$NDK_PATH"
-          echo "ANDROID_NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
-          qpm restore --locked false
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r26d
 
-      - name: Build
+      - name: Restore and Build
         run: |
-          cmake -G "Ninja" -DCMAKE_BUILD_TYPE=RelWithDebInfo -B build
+          qpm config ndk-path "${{ steps.setup-ndk.outputs.ndk-path }}"
+          echo "ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+          qpm restore --locked false
+          cmake -G "Ninja" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DANDROID_NDK="${{ steps.setup-ndk.outputs.ndk-path }}" -B build
           cmake --build ./build
 
       - name: Upload mod
