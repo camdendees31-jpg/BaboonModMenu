@@ -13,21 +13,22 @@ jobs:
       - name: Install QPM
         run: |
           DOWNLOAD_URL=$(curl -s https://api.github.com/repos/QuestPackageManager/QPM.CLI/releases/tags/v1.5.8 | python3 -c "import sys,json; data=json.load(sys.stdin); urls=[a['browser_download_url'] for a in data['assets'] if 'linux' in a['name'].lower()]; print(urls[0])")
-          echo "Downloading from: $DOWNLOAD_URL"
           curl -L "$DOWNLOAD_URL" -o qpm.zip
           unzip qpm.zip -d qpm_extracted
           chmod +x qpm_extracted/qpm
           sudo mv qpm_extracted/qpm /usr/local/bin/qpm
-          qpm --version
-          
-      - name: QPM Restore
-        run: qpm restore
 
-      - name: Setup NDK
+      - name: Install Ninja & CMake
+        run: sudo apt-get install -y ninja-build cmake
+
+      - name: Setup NDK and Restore
         run: |
           qpm ndk download 26
-          qpm ndk pin 26 --online
-          qpm config ndk-path $HOME/.local/share/QPM-RS/ndk/26
+          NDK_PATH=$(find $HOME/.local/share/QPM-RS/ndk -maxdepth 1 -type d -name "26*" | head -1)
+          echo "NDK at: $NDK_PATH"
+          qpm config ndk-path "$NDK_PATH"
+          echo "ANDROID_NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
+          qpm restore
 
       - name: Build
         run: |
