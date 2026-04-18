@@ -24,7 +24,10 @@ jobs:
         run: qpm restore
 
       - name: Setup NDK
-        run: qpm ndk resolve -d
+        run: |
+          qpm ndk download 26
+          qpm ndk pin 26 --online
+          qpm config ndk-path $HOME/.local/share/QPM-RS/ndk/26
 
       - name: Build
         run: |
