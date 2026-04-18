@@ -31,7 +31,7 @@ jobs:
         run: |
           qpm config ndk-path "${{ steps.setup-ndk.outputs.ndk-path }}"
           echo "ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
-          qpm restore --locked false
+          qpm restore
           cmake -G "Ninja" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DANDROID_NDK="${{ steps.setup-ndk.outputs.ndk-path }}" -B build
           cmake --build ./build
 
