@@ -4,8 +4,8 @@
   "sharedDir": "shared",
   "dependenciesDir": "extern",
   "info": {
-    "name": "#{name}",
-    "id": "#{id}",
+    "name": "BaboonModMenu",
+    "id": "BaboonModMenu",
     "version": "0.1.0",
     "url": null,
     "additionalData": {
