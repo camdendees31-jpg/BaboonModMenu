@@ -5,11 +5,11 @@
   "dependenciesDir": "extern",
   "info": {
     "name": "BaboonModMenu",
-    "id": "BaboonModMenu",
+    "id": "baboon-mod-menu",
     "version": "0.1.0",
     "url": null,
     "additionalData": {
-      "overrideSoName": "lib#{id}.so",
+      "overrideSoName": "libbaboon-mod-menu.so",
       "cmake": true
     }
   },
@@ -47,7 +47,7 @@
       "./extern/libs"
     ],
     "qmodIncludeFiles": [],
-    "qmodOutput": "./#{name}.qmod"
+    "qmodOutput": "./BaboonModMenu.qmod"
   },
   "dependencies": [
     {
