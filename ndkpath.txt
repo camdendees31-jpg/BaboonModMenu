@@ -1,1 +1,1 @@
-C:\Users\camde\AppData\Roaming\QPM-RS\ndk\26.3.11579264
+/opt/hostedtoolcache/ndk/r26d/x64
